@@ -9,7 +9,7 @@ Code that provides the exact solution to finding a Max Clique
 import random
 
 
-def BronKerbosch_pivot(all_maximal_cliques, clique, possible_clique_members, graph):
+def BronKerbosch_pivot(all_maximal_cliques, clique, possible_clique_additions, graph):
     """
     Maximal Clique Listing algorithm for finding all cliques that have reached their
     maximum size, through implementation of the Bron–Kerbosch algorithm with pivoting.
@@ -17,31 +17,40 @@ def BronKerbosch_pivot(all_maximal_cliques, clique, possible_clique_members, gra
     :param graph: graph of vertices with their respective undirected edges stored in a dict
     :return:
     """
-    # A clique is a complete subgraph of the graph
-    # To find all maximal cliques, we must utilize every possible subgraph of the vertices
-
-    # Maximal clique found when no more possible clique members
-    if len(possible_clique_members) == 0:
+    # Maximal clique found when no more possible clique addition
+    if len(possible_clique_additions) == 0:
         return all_maximal_cliques.append(clique)
 
-    # Choose the next pivot vertex as the highest degree vertex
-    pivot = possible_clique_members.pop()
-    possible_clique_members.add(pivot) # no peek function
-    for vertex in possible_clique_members:
+    # Utilize a pivot vertex for finding additional clique additions
+    pivot = possible_clique_additions.pop()
+    possible_clique_additions.add(pivot) # no peek function
+    for vertex in possible_clique_additions:
         if len(graph[pivot]) < len(graph[vertex]):
             pivot = vertex
 
-    # For each vertex that is either the pivot or not a neighbor
-    P = filter(lambda v: v not in graph[pivot], possible_clique_members)
-    for v in P:
-        # BronKerbosch2(R ⋃ {v}, P ⋂ N(v), X ⋂ N(v))
+    # iterate through the pivot and its non neighbors
+    # P_sub_pivot_neighbors = P - N(pivot)
+    P_sub_pivot_neighbors = filter(lambda v: v not in graph[pivot], possible_clique_additions)
+    for v in P_sub_pivot_neighbors:
+        """
+        BronKerbosch2(R ⋃ {v}, P ⋂ N(v), X ⋂ N(v))
+        
+        Recurse through neighboring vertices of the current clique
+        """
+        # R: set of vertices found; Current Clique
+        R = clique.union({v})
+
+        # P: Set of possible clique vertex additions based on neighbors
+        P = possible_clique_additions.intersection(set(graph[v]))
+
+        # Not using X because it is just a mathematics proof
         BronKerbosch_pivot(all_maximal_cliques,
-                           clique.union({v}),
-                           possible_clique_members.intersection(set(graph[v])),
+                           R,
+                           P,
                            graph)
 
         # P := P \ {v}
-        possible_clique_members.remove(v)
+        # Done through the filter iterator
 
 def main():
     # read in input
@@ -58,7 +67,7 @@ def main():
     maximal_cliques = []
     BronKerbosch_pivot(maximal_cliques, set(), set(range(n)), graph)
 
-    print(maximal_cliques)
+    print(max(maximal_cliques, key=len)) # Arbitrary first choice
 
 if __name__ == "__main__":
     main()
