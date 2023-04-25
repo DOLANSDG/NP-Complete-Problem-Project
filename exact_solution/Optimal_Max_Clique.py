@@ -54,20 +54,35 @@ def BronKerbosch_pivot(all_maximal_cliques, clique, possible_clique_additions, g
 
 def main():
     # read in input
-    n = int(input())
+    n_edges = int(input())
 
-    graph = [None for _ in range(n)]
-    for _ in range(n):
-        v, *edges = input().split()
+    graph = {}
+    vertices = set()
+    for _ in range(n_edges):
+        u, v = input().split()
 
-        for edge in edges:
-            graph[int(v)] = [int(val) for val in edges]
+        if u not in graph:
+            graph[u] = set()
+            vertices.add(u)
+        if v not in graph:
+            graph[v] = set()
+            vertices.add(v)
+
+        graph[u].add(v)
+        graph[v].add(u)
+
+    if len(vertices) <= 1:
+        if len(vertices) == 0:
+            print('∅')
+        else:
+            print(vertices.pop())
+        return
 
     # Find the all cliques
     maximal_cliques = []
-    BronKerbosch_pivot(maximal_cliques, set(), set(range(n)), graph)
+    BronKerbosch_pivot(maximal_cliques, set(), vertices, graph)
 
-    print(max(maximal_cliques, key=len)) # Arbitrary first choice
+    print(*list(max(maximal_cliques, key=len))) # Arbitrary first choice
 
 if __name__ == "__main__":
     main()
