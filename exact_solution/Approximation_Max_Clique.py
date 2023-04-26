@@ -5,13 +5,14 @@ date: 4/20/2023
 Max Clique Approximation Solution.
 
 Code that provides an approximation solution to finding a Max Clique in Polynomial Time.
+Utilization of the Bron–Kerbosch algorithm.
+https://en.wikipedia.org/wiki/Bron%E2%80%93Kerbosch_algorithm
 """
 
 
-def BronKerbosch_pivot(all_maximal_cliques, clique, possible_clique_additions, graph):
+def approximation_algorithm(all_maximal_cliques, clique, possible_clique_additions, graph):
     """
-    Maximal Clique Listing algorithm for finding all cliques that have reached their
-    maximum size, through implementation of the Bron–Kerbosch algorithm with pivoting.
+    Breadth First Search from a node to find connected and complete vertices
 
     :param graph: graph of vertices with their respective undirected edges stored in a dict
     :return:
@@ -65,8 +66,9 @@ def main():
 
     # Find the all cliques
     maximal_cliques = []
-    BronKerbosch_pivot(maximal_cliques, set(), set(range(n)), graph)
+    approximation_algorithm(maximal_cliques, set(), set(range(n)), graph)
 
+    max_clique = max(maximal_cliques, key=len)
     print(max(maximal_cliques, key=len))  # Arbitrary first choice
 
 
