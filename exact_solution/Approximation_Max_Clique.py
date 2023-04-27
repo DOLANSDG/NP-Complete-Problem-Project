@@ -11,8 +11,7 @@ https://en.wikipedia.org/wiki/Bron%E2%80%93Kerbosch_algorithm
 import queue
 
 
-def whatever_first_search(graph, bag, visited_vertices, isv):
-    found_cliques = {}
+def whatever_first_search(all_maximal_cliques, graph, bag, visited_vertices, isv):
     # O(n)
     while not bag.empty():
         u, parent_clique_members = bag.get()
@@ -31,13 +30,12 @@ def whatever_first_search(graph, bag, visited_vertices, isv):
 
         # Check if all clique members are visited ; Check if clique found
         # O(n,m)
-        if visited_vertices == visited_vertices.intersection(parent_clique_members):
+        if parent_clique_members == visited_vertices.intersection(parent_clique_members):
             clique_key = str(parent_clique_members)
-            if clique_key not in found_cliques:
-                found_cliques[clique_key] = list(parent_clique_members)
+            if clique_key not in all_maximal_cliques:
+                all_maximal_cliques[clique_key] = list(parent_clique_members)
 
-    # The clique has been found in clique_members
-    return found_cliques
+    # The clique has been found in all_clique_members
 
 def approximation_algorithm(all_maximal_cliques, vertices, graph):
     """
@@ -60,6 +58,7 @@ def approximation_algorithm(all_maximal_cliques, vertices, graph):
             independent_set.add(u)
 
     # n^3
+    all_maximal_cliques = {}
     for u in independent_set:
         # O(n) worst case (chain graph)
 
@@ -78,11 +77,10 @@ def approximation_algorithm(all_maximal_cliques, vertices, graph):
 
             # Find a maximal clique starting from (u,v)
             # O(n^2)
-            cliques_found = whatever_first_search(graph, bag, visited_vertices, u)
-            all_maximal_cliques += cliques_found.values()
+            whatever_first_search(all_maximal_cliques, graph, bag, visited_vertices, u)
 
     # All cliques have been found and added to maximal_clique
-    return
+    return all_maximal_cliques.values()
 
 
 def main():
@@ -114,7 +112,7 @@ def main():
     # Find the all cliques
     maximal_cliques = []
     # n^3log(n)
-    approximation_algorithm(maximal_cliques, vertices, graph)
+    maximal_cliques = approximation_algorithm(maximal_cliques, vertices, graph)
 
     print(*list(max(maximal_cliques, key=len)))  # Arbitrary first choice
 
