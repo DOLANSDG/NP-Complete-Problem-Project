@@ -82,33 +82,7 @@ def main():
     maximal_cliques = []
     BronKerbosch_pivot(maximal_cliques, set(), vertices, graph)
 
-    max_clique = list(max(maximal_cliques, key=len))
     print(*list(max(maximal_cliques, key=len))) # Arbitrary first choice
-
-    # # Verification of NP
-    # is_max_clique = True # assumed true
-    # for u in max_clique:
-    #     for v in max_clique:
-    #         if u != v:
-    #             continue
-    #         if v not in graph[u] or u not in graph[v]:
-    #             is_max_clique
-    #
-    # print()
-    # if is_max_clique:
-    #     print('Verification: Found Max Clique is the Maximum Clique')
-    # else:
-    #     print('Verification: Found Max Clique is the Maximum Clique')
 
 if __name__ == "__main__":
     main()
-
-max_clique_certification(G=(V,E), M):
-    for (u, v) in S:
-        if (u, v) not in E:
-            return False
-        for (u, w) in E:
-            if (u, w) in S:
-                return False
-
-    return True
