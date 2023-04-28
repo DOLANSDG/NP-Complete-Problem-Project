@@ -7,6 +7,7 @@ Max Clique Optimal Solution.
 Code that provides the exact solution to finding a Max Clique
 """
 import random
+from time import time
 
 
 def BronKerbosch_pivot(all_maximal_cliques, clique, possible_clique_additions, graph):
@@ -80,9 +81,13 @@ def main():
 
     # Find the all cliques
     maximal_cliques = []
+    before = time()
     BronKerbosch_pivot(maximal_cliques, set(), vertices, graph)
+    after = time()
 
     print(*list(max(maximal_cliques, key=len))) # Arbitrary first choice
+
+    print("\nruntime: ", after - before)
 
 if __name__ == "__main__":
     main()

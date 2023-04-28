@@ -9,6 +9,7 @@ Utilization of the Bron–Kerbosch algorithm.
 https://en.wikipedia.org/wiki/Bron%E2%80%93Kerbosch_algorithm
 """
 import queue
+from time import time
 
 
 def whatever_first_search(all_maximal_cliques, graph, bag, visited_vertices, isv):
@@ -112,9 +113,13 @@ def main():
     # Find the all cliques
     maximal_cliques = []
     # n^3log(n)
+    before = time()
     maximal_cliques = approximation_algorithm(maximal_cliques, vertices, graph)
+    after = time()
 
     print(*list(max(maximal_cliques, key=len)))  # Arbitrary first choice
+
+    print("\nruntime: ", after - before)
 
 
 if __name__ == "__main__":
