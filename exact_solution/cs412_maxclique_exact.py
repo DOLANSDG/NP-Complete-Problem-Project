@@ -5,6 +5,8 @@ date: 4/20/2023
 Max Clique Optimal Solution.
 
 Code that provides the exact solution to finding a Max Clique
+
+I abide by the JMU honor code.
 """
 import random
 from time import time
@@ -31,8 +33,8 @@ def BronKerbosch_pivot(all_maximal_cliques, clique, possible_clique_additions, g
 
     # iterate through the pivot and its non neighbors
     # P_sub_pivot_neighbors = P - N(pivot)
-    P_sub_pivot_neighbors = filter(lambda v: v not in graph[pivot], possible_clique_additions)
-    for v in P_sub_pivot_neighbors:
+    P_sub_pivot_non_neighbors = filter(lambda v: v not in graph[pivot], possible_clique_additions)
+    for v in P_sub_pivot_non_neighbors:
         """
         BronKerbosch2(R ⋃ {v}, P ⋂ N(v), X ⋂ N(v))
         
