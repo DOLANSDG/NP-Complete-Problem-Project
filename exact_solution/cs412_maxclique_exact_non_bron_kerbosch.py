@@ -37,7 +37,7 @@ def exact_solution(vertices, graph):
             cliques.append(subset)
 
     # return the largest clique
-    return max(subsets, key=len)
+    return max(cliques, key=len)
 
 
 def main():

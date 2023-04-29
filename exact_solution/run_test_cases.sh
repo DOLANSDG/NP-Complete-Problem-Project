@@ -8,6 +8,11 @@ echo "This script created by Dawson Dolansky is for the purpose of running the e
 echo
 echo "================================================="
 
+# Remove test cases generated
+cd "./test_cases/"
+rm *gen*
+cd ..
+
 # filename
 for filename in $TEST_FILES_PATH
 do
