@@ -7,10 +7,12 @@ Max Clique Optimal Solution.
 Code that provides the exact solution to finding a Max Clique
 """
 import random
+import sys
 
 
 def main():
-    n_vertices = int(input()) # n vertices
+    n_vertices = int(sys.argv[1])
+    output_directory = sys.argv[2]
 
     vertices = set()
     for i in range(n_vertices):
@@ -25,7 +27,7 @@ def main():
                 pair = f"{min(u, v)} {max(u, v)}"
                 edges.add(pair)
 
-    with open(f'gen_{len(edges)}_edges.txt', 'w') as file:
+    with open(f'{output_directory}gen_{len(edges)}_edges.txt', 'w') as file:
         file.write(f'{len(edges)}\n')
 
         for edge in edges:
