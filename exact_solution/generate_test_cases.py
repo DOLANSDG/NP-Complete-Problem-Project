@@ -27,7 +27,7 @@ def main():
                 pair = f"{min(u, v)} {max(u, v)}"
                 edges.add(pair)
 
-    with open(f'{output_directory}gen_{len(edges)}_edges.txt', 'w') as file:
+    with open(f'{output_directory}gen_{len(edges)}_edges_{n_vertices}_vertices.txt', 'w') as file:
         file.write(f'{len(edges)}\n')
 
         for edge in edges:

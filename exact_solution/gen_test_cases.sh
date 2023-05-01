@@ -14,12 +14,9 @@ echo "================================================="
 echo
 echo "Generating test cases of random edges with vertex counts of {5, 25, 125}"
 echo
-python generate_test_cases.py 50 ./test_cases/
-for N_VERTICES in 5 25
+for N_VERTICES in 10 20 30 40 50 60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230 240 250
 do
 # three trials
-python generate_test_cases.py $N_VERTICES ./test_cases/
-python generate_test_cases.py $N_VERTICES ./test_cases/
 python generate_test_cases.py $N_VERTICES ./test_cases/
 done
 echo
