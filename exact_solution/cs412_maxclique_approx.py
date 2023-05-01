@@ -48,11 +48,9 @@ def approximation_algorithm(all_maximal_cliques, vertices, graph):
     :return:
     """
     # Get an independent set of vertices that are of higher degree first
-    # O(n^3log(n))
+    # O(n^2)
     independent_set = set()
     for u in sorted(graph, key=lambda u: len(graph[u]), reverse=True):
-        # utilized stack overflow for implementation of this sort
-        # https://stackoverflow.com/questions/16868457/python-sorting-dictionary-by-length-of-values
         independent = True
         for v in graph[u]:
             if v in independent_set:

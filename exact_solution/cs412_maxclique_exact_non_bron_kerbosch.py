@@ -24,14 +24,17 @@ def exact_solution(vertices, graph):
     cliques = []
     for subset in subsets:
         is_complete = True
-        if len(subset) == 0:
+        if len(subset) <= 2:
+            if len(cliques) == 0 and len(subset) > 1:
+                cliques.append(subset)
             continue
         else:
             for i in range(0, len(subset) - 1):
-                u, v = subset[i], subset[i+1]
-                if v not in graph[u]:
-                    is_complete = False
-                    break
+                for j in range(i, len(subset) - 1):
+                    u, v = subset[i], subset[j+1]
+                    if v not in graph[u]:
+                        is_complete = False
+                        break
 
         if is_complete:
             cliques.append(subset)
