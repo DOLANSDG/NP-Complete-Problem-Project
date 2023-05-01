@@ -12,7 +12,6 @@ import sys
 
 def main():
     n_vertices = int(sys.argv[1])
-    output_directory = sys.argv[2]
 
     vertices = set()
     for i in range(n_vertices):
@@ -27,11 +26,18 @@ def main():
                 pair = f"{min(u, v)} {max(u, v)}"
                 edges.add(pair)
 
-    with open(f'{output_directory}gen_{len(edges)}_edges_{n_vertices}_vertices.txt', 'w') as file:
+    with open(f'./test_cases/approximation_test_cases/gen_{len(edges)}_edges_{n_vertices}_vertices.txt', 'w') as file:
         file.write(f'{len(edges)}\n')
 
         for edge in edges:
             file.write(edge + '\n')
+
+    if n_vertices <= 27: # upperlimit of 20 minutes for testing
+        with open(f'./test_cases/exact_test_cases/gen_{len(edges)}_edges_{n_vertices}_vertices.txt', 'w') as file:
+            file.write(f'{len(edges)}\n')
+
+            for edge in edges:
+                file.write(edge + '\n')
 
 if __name__ == "__main__":
     main()
